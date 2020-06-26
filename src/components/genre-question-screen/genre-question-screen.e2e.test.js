@@ -35,7 +35,9 @@ it(`When user answers genre question form is not sent`, () => {
   const onAnswer = jest.fn();
   const genreQuestion = shallow(<GenreQuestionScreen
     onAnswer={onAnswer}
-    question={question}/>);
+    question={question}
+    renderPlayer={()=>{}}
+  />);
 
   const form = genreQuestion.find(`form`);
   const formSendPrevention = jest.fn();
@@ -53,6 +55,7 @@ it(`User answer passed to callback is consistent with "userAnswer" prop`, () => 
   const genreQuestion = shallow(<GenreQuestionScreen
     onAnswer={onAnswer}
     question={question}
+    renderPlayer={()=>{}}
   />);
 
   const form = genreQuestion.find(`form`);

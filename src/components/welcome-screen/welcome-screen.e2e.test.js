@@ -12,7 +12,10 @@ it(`welcome button should be pressed`, () => {
   const onWelcomeButtonClick = jest.fn();
 
   const welcomeScreen = shallow(
-      <WelcomeScreen errorsCount={3} onWelcomeButtonCLick={onWelcomeButtonClick}/>
+      <WelcomeScreen
+        errorsCount={3}
+        onWelcomeButtonCLick={onWelcomeButtonClick}
+      />
   );
 
   const welcomeButton = welcomeScreen.find(`button.welcome__button`);

@@ -1,7 +1,6 @@
 import React from "react";
 import {configure, shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-
 import ArtistQuestionScreen from "./artist-question-screen";
 
 configure({adapter: new Adapter()});
@@ -45,6 +44,7 @@ it(`Click on user answer should pass to the callback data-object from whhich thi
       <ArtistQuestionScreen
         onAnswer={onAnswer}
         question={question}
+        renderPlayer={()=>{}}
       />);
 
   const answerInputs = screen.find(`input`);

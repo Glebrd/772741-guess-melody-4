@@ -25,6 +25,7 @@ it(`ArtistQuestionScreen is rendered correctly`, () => {
       <ArtistQuestionScreen
         onAnswer={() => {}}
         question={question}
+        renderPlayer={() => {}}
       />
   ).toJSON();
 

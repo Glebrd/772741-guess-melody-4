@@ -23,7 +23,11 @@ const question = {
 it(`Is GenreQuestionScreen rendered correctly`, () => {
   const tree = renderer.create(
       (
-        <GenreQuestionScreen question={question} onAnswer={() => {}}/>
+        <GenreQuestionScreen
+          question={question}
+          onAnswer={() => {}}
+          renderPlayer={() => {}}
+        />
       ), {
         createNodeMock: () => {
           return {};
