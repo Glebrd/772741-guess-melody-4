@@ -30,7 +30,6 @@ exports[`Is GenreQuestionScreen rendered correctly 1`] = `
           type="checkbox"
           value="answer-0"
         />
-         
         <label
           className="game__check"
           htmlFor="answer-0"
@@ -54,7 +53,6 @@ exports[`Is GenreQuestionScreen rendered correctly 1`] = `
           type="checkbox"
           value="answer-1"
         />
-         
         <label
           className="game__check"
           htmlFor="answer-1"
@@ -78,7 +76,6 @@ exports[`Is GenreQuestionScreen rendered correctly 1`] = `
           type="checkbox"
           value="answer-2"
         />
-         
         <label
           className="game__check"
           htmlFor="answer-2"
@@ -102,7 +99,6 @@ exports[`Is GenreQuestionScreen rendered correctly 1`] = `
           type="checkbox"
           value="answer-3"
         />
-         
         <label
           className="game__check"
           htmlFor="answer-3"
