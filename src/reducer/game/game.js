@@ -1,13 +1,11 @@
-import {extend} from "./utils";
-import {GameType} from "./const";
-import questions from "./mocks/questions";
+import {extend} from "../../utils";
+import {GameType} from "../../const";
 
 // Изначальное состояние.
 const initialState = {
   mistakes: 0,
   maxMistakes: 3,
   step: -1,
-  questions,
 };
 
 // Перечисление имеющихся типов действий
