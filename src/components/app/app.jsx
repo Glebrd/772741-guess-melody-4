@@ -14,13 +14,17 @@ import GameOverScreen from "../game-over-screen/game-over-screen.jsx";
 import WinScreen from "../win-screen/win-screen.jsx";
 import {getStep, getMistakes, getMaxMistakes} from "../../reducer/game/selectors.js";
 import {getQuestions} from "../../reducer/data/selectors";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
+import {Operation as UserOperation} from "../../reducer/user/user";
+import AuthScreen from "../auth-screen/auth-screen.jsx";
 
 const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 class App extends PureComponent {
   _renderGameScreen() {
-    const {maxMistakes, mistakes, questions, onUserAnswer, onWelcomeButtonClick, resetGame, step} = this.props;
+    const {authorizationStatus, login, maxMistakes, mistakes, questions, onUserAnswer, onWelcomeButtonClick, resetGame, step} = this.props;
     const question = questions[step];
 
     if (step === -1) {
@@ -41,13 +45,23 @@ class App extends PureComponent {
     }
     // Если удалось дойти до конаца вопросов и нас не выкинуло не выкинуло на экран проигрыша (при проверке количества ошибок), то показываем экран победы)_
     if (step >= questions.length) {
-      return (
-        <WinScreen
-          questionsCount={questions.length}
-          mistakesCount={mistakes}
-          onReplayButtonClick={resetGame}
-        />
-      );
+      if (authorizationStatus === AuthorizationStatus.AUTH) {
+        return (
+          <WinScreen
+            questionsCount={questions.length}
+            mistakesCount={mistakes}
+            onReplayButtonClick={resetGame}
+          />
+        );
+      } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+        return (
+          <AuthScreen
+            onSubmit={login}
+            onReplayButtonClick={resetGame}
+          />
+        );
+      }
+      return null;
     }
 
     if (question) {
@@ -100,6 +114,12 @@ class App extends PureComponent {
               onAnswer={() => {}}
             />
           </Route>
+          <Route exact path="/dev-auth">
+            <AuthScreen
+              onSubmit={() => {}}
+              onReplayButtonClick={() => {}}
+            />
+          </Route>
         </Switch>
       </BrowserRouter>
     );
@@ -107,6 +127,8 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
   maxMistakes: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired,
@@ -117,6 +139,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
   step: getStep(state),
   maxMistakes: getMaxMistakes(state),
   questions: getQuestions(state),
@@ -124,6 +147,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  login(authData) {
+    dispatch(UserOperation.login(authData));
+  },
   onWelcomeButtonClick() {
     dispatch(ActionCreator.incrementStep());
   },
