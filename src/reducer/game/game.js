@@ -13,6 +13,7 @@ const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
   RESET: `RESET`,
+  GO_TO_WELCOME: `GO_TO_WELCOME`,
 };
 
 const isArtistAnswerCorrect = (question, userAnswer) => {
@@ -20,10 +21,11 @@ const isArtistAnswerCorrect = (question, userAnswer) => {
 };
 
 const isGenreAnswerCorrect = (question, userAnswer) => {
-  return userAnswer.every((it, i)=>{
+  return userAnswer.every((it, i) => {
     return it === (question.answers[i].genre === question.genre);
   });
 };
+
 
 // Создаем action
 const ActionCreator = {
@@ -54,6 +56,12 @@ const ActionCreator = {
       payload: null,
     };
   },
+  goToWelcome: () => {
+    return {
+      type: ActionType.GO_TO_WELCOME,
+      payload: null,
+    };
+  },
 };
 
 // На вход передаём state и action. Если state не указан,то берем изначальный.
@@ -73,8 +81,15 @@ const reducer = (state = initialState, action) => {
       return extend(initialState, {
         step: 0,
       });
+    case ActionType.LOAD_QUESTIONS:
+      return extend(state, {
+        questions: action.payload,
+      });
+    case ActionType.GO_TO_WELCOME:
+      return extend(initialState, {
+        step: -1,
+      });
   }
-
   return state;
 };
 

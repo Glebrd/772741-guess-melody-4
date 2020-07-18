@@ -9,9 +9,9 @@ exports[`GameScreen component render correctly with type GameType.ARTIST 1`] = `
   >
     <a
       className="game__back"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
-       
       <span
         className="visually-hidden"
       >
@@ -71,9 +71,9 @@ exports[`GameScreen component render correctly with type GameType.GENRE 1`] = `
   >
     <a
       className="game__back"
-      href="#"
+      href="/"
+      onClick={[Function]}
     >
-       
       <span
         className="visually-hidden"
       >

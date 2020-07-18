@@ -50,7 +50,7 @@ class AuthScreen extends PureComponent {
               htmlFor="password">Пароль</label>
             <input
               ref={this.passwordRef}
-              className="login__input" type="text" name="password" id="password"/>
+              className="login__input" type="password" name="password" id="password"/>
             <span className="login__error">Неверный пароль</span>
           </p>
           <button className="login__button button" type="submit">Войти
