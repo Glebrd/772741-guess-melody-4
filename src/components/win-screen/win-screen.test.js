@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import WinScreen from "./win-screen.jsx";
+import WinScreen from "./win-screen";
 import {Router} from "react-router-dom";
 import history from "../../history";
 
@@ -9,15 +9,9 @@ describe(`Shhould WinScreen render correctly`, () => {
     it(`With 0 mistake`, () => {
       const tree = renderer
         .create(
-            <Router
-              history={history}
-            >
-              <WinScreen
-                questionsCount={3}
-                mistakesCount={0}
-                onReplayButtonClick={() => {}}
-              />
-            </Router>
+          <Router history={history}> <WinScreen questionsCount={3}
+                                                mistakesCount={0}
+                                                onReplayButtonClick={() => {}}/> </Router>
         )
         .toJSON();
 
@@ -27,15 +21,9 @@ describe(`Shhould WinScreen render correctly`, () => {
     it(`With 1 mistake`, () => {
       const tree = renderer
         .create(
-            <Router
-              history={history}
-            >
-              <WinScreen
-                questionsCount={3}
-                mistakesCount={1}
-                onReplayButtonClick={() => {}}
-              />
-            </Router>
+          <Router history={history}> <WinScreen questionsCount={3}
+                                                mistakesCount={1}
+                                                onReplayButtonClick={() => {}}/> </Router>
         )
         .toJSON();
 
@@ -47,15 +35,9 @@ describe(`Shhould WinScreen render correctly`, () => {
     it(`With 0 mistakes`, () => {
       const tree = renderer
         .create(
-            <Router
-              history={history}
-            >
-              <WinScreen
-                questionsCount={2}
-                mistakesCount={0}
-                onReplayButtonClick={() => {}}
-              />
-            </Router>
+          <Router history={history}> <WinScreen questionsCount={2}
+                                                mistakesCount={0}
+                                                onReplayButtonClick={() => {}}/> </Router>
         )
         .toJSON();
 
@@ -65,15 +47,9 @@ describe(`Shhould WinScreen render correctly`, () => {
     it(`With 1 mistake`, () => {
       const tree = renderer
         .create(
-            <Router
-              history={history}
-            >
-              <WinScreen
-                questionsCount={2}
-                mistakesCount={1}
-                onReplayButtonClick={() => {}}
-              />
-            </Router>
+          <Router history={history}> <WinScreen questionsCount={2}
+                                                mistakesCount={1}
+                                                onReplayButtonClick={() => {}}/> </Router>
         )
         .toJSON();
 

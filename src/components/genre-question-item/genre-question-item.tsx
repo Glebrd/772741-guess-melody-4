@@ -1,7 +1,6 @@
-import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 
-class GenreQuestionItem extends PureComponent {
+class GenreQuestionItem extends React.PureComponent {
   render() {
     const {answer, id, onChange, renderPlayer, userAnswer} = this.props;
 
@@ -24,16 +23,5 @@ class GenreQuestionItem extends PureComponent {
     );
   }
 }
-
-GenreQuestionItem.propTypes = {
-  answer: PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-  }).isRequired,
-  id: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  renderPlayer: PropTypes.func.isRequired,
-  userAnswer: PropTypes.bool.isRequired,
-};
 
 export default GenreQuestionItem;

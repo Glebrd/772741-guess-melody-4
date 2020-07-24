@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import AudioPlayer from "./audio-player.jsx";
+import AudioPlayer from "./audio-player";
 
 const mock = {
   song: {
@@ -9,22 +9,20 @@ const mock = {
   }
 };
 
-it(`AudioPlayer is rendered correctly`, ()=>{
+it(`AudioPlayer is rendered correctly`, () => {
   const {song} = mock;
 
   const tree = renderer.create(
-      <AudioPlayer
-        isPlaying={false}
-        isLoading={true}
-        onPlayButtonClick={()=>{}}
-        src={song.src}
-      >
-        <audio/>
-      </AudioPlayer>, {
-        createNodeMock: () => {
-          return {};
-        }
-      }).toJSON();
+    <AudioPlayer isPlaying={false}
+                 isLoading={true}
+                 onPlayButtonClick={() => {}}
+                 src={song.src}>
+      <audio/>
+    </AudioPlayer>, {
+      createNodeMock: () => {
+        return {};
+      }
+    }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
