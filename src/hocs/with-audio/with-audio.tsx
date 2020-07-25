@@ -1,12 +1,25 @@
 import * as React from "react";
 
 // Добавляет функциональность воспроизведения аудио (тэг аудио).
+interface Props {
+  isPlaying: boolean;
+  onPlayButtonClick: () => void;
+  src: string;
+}
+
+interface State {
+  isLoading: boolean;
+  isPlaying: boolean;
+  progress: number;
+}
+
 const withAudio = (Component) => {
-  class WithAudio extends React.PureComponent {
+  class WithAudio extends React.PureComponent<Props, State> {
+    private audioRef: React.RefObject<HTMLAudioElement>;
     constructor(props) {
       super(props);
 
-      this._audioRef = React.createRef();
+      this.audioRef = React.createRef();
 
       this.state = {
         progress: 0,
@@ -17,7 +30,7 @@ const withAudio = (Component) => {
 
     componentDidMount() {
       const {src} = this.props;
-      const audio = this._audioRef.current;
+      const audio = this.audioRef.current;
 
       audio.src = src;
 
@@ -44,7 +57,7 @@ const withAudio = (Component) => {
 
     // Проверка, для случая, когда мы (возомжно) нажмём на друго плеер.
     componentDidUpdate() {
-      const audio = this._audioRef.current;
+      const audio = this.audioRef.current;
 
       if (this.state.isPlaying) {
         audio.play();
@@ -54,7 +67,7 @@ const withAudio = (Component) => {
     }
 
     componentWillUnmount() {
-      const audio = this._audioRef.current;
+      const audio = this.audioRef.current;
 
       audio.oncanplaythrough = null;
       audio.onplay = null;
@@ -74,7 +87,7 @@ const withAudio = (Component) => {
             this.setState({isPlaying: !isPlaying});
             onPlayButtonClick();
           }}>
-          <audio ref={this._audioRef}/>
+          <audio ref={this.audioRef}/>
         </Component>
       );
     }

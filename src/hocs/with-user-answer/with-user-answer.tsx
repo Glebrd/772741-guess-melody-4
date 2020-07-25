@@ -1,9 +1,31 @@
 import * as React from "react";
-import {GameType} from "../../const";
+import {Subtract} from "utility-types";
+import {QuestionGenre} from "../../types";
 
 // Работает с ответами пользователя
+
+interface Props {
+  question: QuestionGenre;
+  onAnswer: (question: QuestionGenre, answers: Answer) => void;
+}
+
+interface State {
+  answers: Answer;
+}
+
+interface InjectedProps {
+  userAnswer: Answer;
+  onChange: (answerIndex: number) => void;
+  onAnswer: () => void;
+}
+
+type Answer = boolean[];
+
 const withUserAnswer = (Component) => {
-  class WithUserAnswer extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Props & Subtract<P, InjectedProps>;
+
+  class WithUserAnswer extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 

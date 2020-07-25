@@ -1,15 +1,20 @@
 import * as React from "react";
 
-export default class AudioPlayer extends React.PureComponent {
+
+interface Props {
+  isLoading: boolean;
+  isPlaying: boolean;
+  onPlayButtonClick: () => void;
+}
+
+export default class AudioPlayer extends React.PureComponent<Props, {}> {
   render() {
     const {isLoading, isPlaying, onPlayButtonClick, children} = this.props;
 
     return (
       <React.Fragment>
         <button
-          className={`track__button track__button--${isPlaying
-            ? `pause`
-            : `play`}`}
+          className={`track__button track__button--${isPlaying ? `pause` : `play`}`}
           type="button"
           disabled={isLoading}
           onClick={() => onPlayButtonClick()}
@@ -21,4 +26,3 @@ export default class AudioPlayer extends React.PureComponent {
     );
   }
 }
-

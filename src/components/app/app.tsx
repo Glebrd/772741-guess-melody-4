@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/game/game";
 import WelcomeScreen from "../welcome-screen/welcome-screen";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen";
-import {GameType} from "../../const";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen";
 import GameScreen from "../game-screen/game-screen";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player";
@@ -20,11 +19,26 @@ import AuthScreen from "../auth-screen/auth-screen";
 import history from "../../history";
 import {AppRoute} from "../../const";
 import PrivateRoute from "../private-route/private-route";
+import {GameType, QuestionGenre, QuestionArtist} from "../../types";
+
+interface Props {
+  authorizationStatus: string;
+  login: () => void;
+  maxMistakes: number;
+  mistakes: number;
+  questions: Question[];
+  onUserAnswer: () => void;
+  onWelcomeButtonClick: () => void;
+  resetGame: () => void;
+  step: number;
+}
+
+type Question = QuestionArtist | QuestionGenre;
 
 const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
-class App extends React.PureComponent {
+class App extends React.PureComponent<Props, {}> {
   _renderGameScreen() {
     const {authorizationStatus, maxMistakes, mistakes, questions, onUserAnswer, onWelcomeButtonClick, step} = this.props;
     const question = questions[step];
@@ -53,13 +67,19 @@ class App extends React.PureComponent {
       switch (question.type) {
         case GameType.ARTIST:
           return (
-            <GameScreen type={question.type}> <ArtistQuestionScreenWrapped question={question}
-                                                                           onAnswer={onUserAnswer}/> </GameScreen>
+            <GameScreen type={question.type}>
+              <ArtistQuestionScreenWrapped
+                question={question}
+                onAnswer={onUserAnswer}/>
+            </GameScreen>
           );
         case GameType.GENRE:
           return (
-            <GameScreen type={question.type}> <GenreQuestionScreenWrapped question={question}
-                                                                          onAnswer={onUserAnswer}/> </GameScreen>
+            <GameScreen type={question.type}>
+              <GenreQuestionScreenWrapped
+                question={question}
+                onAnswer={onUserAnswer}/>
+            </GameScreen>
           );
       }
     }
@@ -70,22 +90,30 @@ class App extends React.PureComponent {
     const {questions, mistakes, resetGame, login} = this.props;
 
     return (
-      <Router history={history}> <Switch> <Route exact
-                                                 path={AppRoute.ROOT}>
-        {this._renderGameScreen()}
-      </Route> <Route exact
-                      path={AppRoute.LOGIN}> <AuthScreen onReplayButtonClick={resetGame}
-                                                         onSubmit={login}/> </Route> <Route exact
-                                                                                            path={AppRoute.LOSE}>
-        <GameOverScreen onReplayButtonClick={resetGame}/> </Route> <PrivateRoute exact
-                                                                                 path={AppRoute.RESULT}
-                                                                                 render={() => {
-                                                                                   return (
-                                                                                     <WinScreen questionsCount={questions.length}
-                                                                                                mistakesCount={mistakes}
-                                                                                                onReplayButtonClick={resetGame}/>
-                                                                                   );
-                                                                                 }}/> </Switch> </Router>
+      <Router history={history}>
+        <Switch>
+          <Route exact path={AppRoute.ROOT}>
+            {this._renderGameScreen()}
+          </Route>
+          <Route exact path={AppRoute.LOGIN}>
+            <AuthScreen
+              onReplayButtonClick={resetGame}
+              onSubmit={login}/> </Route> <Route exact
+                                                 path={AppRoute.LOSE}>
+          <GameOverScreen onReplayButtonClick={resetGame}/>
+        </Route>
+          <PrivateRoute
+            exact path={AppRoute.RESULT}
+            render={() => {
+              return (
+                <WinScreen
+                  questionsCount={questions.length}
+                  mistakesCount={mistakes}
+                  onReplayButtonClick={resetGame}/>
+              );
+            }}/>
+        </Switch>
+      </Router>
     );
   }
 }

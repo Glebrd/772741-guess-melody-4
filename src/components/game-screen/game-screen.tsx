@@ -1,12 +1,20 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import Mistakes from "../mistakes/mistakes.js";
-import {getMistakes} from "../../reducer/game/selectors.js";
+import Mistakes from "../mistakes/mistakes";
+import {getMistakes} from "../../reducer/game/selectors";
 import {AppRoute} from "../../const";
 import {ActionCreator} from "../../reducer/game/game";
 import {Link} from "react-router-dom";
+import {GameType} from "../../types";
 
-const GameScreen = (props) => {
+interface Props {
+  type: GameType;
+  children: React.ReactNode;
+  goToWelcome: () => void;
+  mistakes: number;
+}
+
+const GameScreen: React.FunctionComponent<Props> = (props: Props) => {
   const {type, children, mistakes, goToWelcome} = props;
 
   return (
@@ -15,9 +23,10 @@ const GameScreen = (props) => {
         <Link to={AppRoute.ROOT}
               onClick={goToWelcome}
               className="game__back"
-              href="#"> <span className="visually-hidden">Сыграть ещё раз</span> <img className="game__logo"
-                                                                                      src="img/melody-logo-ginger.png"
-                                                                                      alt="Угадай мелодию"/> </Link>
+              href="#"> <span className="visually-hidden">Сыграть ещё раз</span>
+          <img className="game__logo"
+               src="img/melody-logo-ginger.png"
+               alt="Угадай мелодию"/> </Link>
 
         <svg xmlns="http://www.w3.org/2000/svg"
              className="timer"
@@ -48,4 +57,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {GameScreen};
-export default connect(mapStateToProps, mapDispatchToProps())(GameScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);

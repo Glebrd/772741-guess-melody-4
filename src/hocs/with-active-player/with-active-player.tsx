@@ -1,11 +1,22 @@
 import * as React from "react";
+import {Subtract} from "utility-types";
 import Player from "../../components/audio-player/audio-player";
 import withAudio from "../with-audio/with-audio.js";
+
+interface State {
+  activePlayerId: number;
+}
+
+interface InjectingProps {
+  renderPlayer: (src: string, id: number) => React.ReactNode;
+}
 
 const AudioPlayer = withAudio(Player);
 // Сохраняет активный плеер из списка плееров
 const withActivePlayer = (Component) => {
-  class WithActivePlayer extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Subtract<P, InjectingProps>;
+  class WithActivePlayer extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 
@@ -19,7 +30,8 @@ const withActivePlayer = (Component) => {
 
       return <Component{...this.props} renderPlayer={(src, id) => {
         return (
-          <AudioPlayer src={src}
+          <AudioPlayer
+            src={src}
             isPlaying={id === activePlayerId}
             onPlayButtonClick={() => this.setState({
               activePlayerId: activePlayerId === id
@@ -30,8 +42,6 @@ const withActivePlayer = (Component) => {
       }}/>;
     }
   }
-
-  WithActivePlayer.propTypes = {};
 
   return WithActivePlayer;
 };
