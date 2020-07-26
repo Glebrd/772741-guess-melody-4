@@ -9,7 +9,7 @@ import GameScreen from "../game-screen/game-screen";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player";
 import withUserAnswer from "../../hocs/with-user-answer/with-user-answer";
 import GameOverScreen from "../game-over-screen/game-over-screen";
-import WinScreen from "../win-screen/win-screen.js";
+import WinScreen from "../win-screen/win-screen";
 import {getStep, getMistakes, getMaxMistakes} from "../../reducer/game/selectors";
 import {getQuestions} from "../../reducer/data/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
@@ -45,8 +45,10 @@ class App extends React.PureComponent<Props, {}> {
 
     if (step === -1) {
       return (
-        <WelcomeScreen errorsCount={maxMistakes}
-                       onWelcomeButtonCLick={onWelcomeButtonClick}/>
+        <WelcomeScreen
+          errorsCount={maxMistakes}
+          onWelcomeButtonCLick={onWelcomeButtonClick}
+        />
       );
     }
 
@@ -98,10 +100,14 @@ class App extends React.PureComponent<Props, {}> {
           <Route exact path={AppRoute.LOGIN}>
             <AuthScreen
               onReplayButtonClick={resetGame}
-              onSubmit={login}/> </Route> <Route exact
-                                                 path={AppRoute.LOSE}>
-          <GameOverScreen onReplayButtonClick={resetGame}/>
-        </Route>
+              onSubmit={login}
+            />
+          </Route>
+          <Route exact path={AppRoute.LOSE}>
+            <GameOverScreen
+              onReplayButtonClick={resetGame}
+            />
+          </Route>
           <PrivateRoute
             exact path={AppRoute.RESULT}
             render={() => {

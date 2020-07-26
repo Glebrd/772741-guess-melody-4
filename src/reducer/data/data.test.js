@@ -1,8 +1,9 @@
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api";
 import {reducer, ActionType, Operation} from "./data";
+import {noop} from "../../utils";
 
-const api = createAPI(() => {});
+const api = createAPI(noop);
 
 const questions = [
   {
@@ -67,7 +68,7 @@ describe(`Operations works correctly`, () => {
       .onGet(`/questions`)
       .reply(200, [{fake: true}]);
 
-    return questionLoader(diapatch, () => {}, api)
+    return questionLoader(diapatch, noop, api)
       .then(() => {
         expect(diapatch).toHaveBeenCalledTimes(1);
         expect(diapatch).toHaveBeenNthCalledWith(1, {

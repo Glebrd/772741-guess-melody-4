@@ -1,5 +1,5 @@
 import * as React from "react";
-import GenreQuestionItem from "../genre-question-item/genre-question-item.jsx";
+import GenreQuestionItem from "../genre-question-item/genre-question-item";
 import {QuestionGenre} from "../../types";
 
 interface Props {
